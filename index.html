@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple To-Do App</title>
+
+  <!-- CSS is inside the same file -->
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+    }
+
+    .container {
+      background: #fff;
+      width: 100%;
+      max-width: 400px;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 16px;
+      color: #333;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 10px 16px;
+      border: none;
+      background: #667eea;
+      color: #fff;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background: #5568d3;
+    }
+
+    ul {
+      list-style: none;
+      margin-top: 16px;
+    }
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      margin-bottom: 8px;
+      background: #f3f4f8;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    li.done span {
+      text-decoration: line-through;
+      color: #999;
+    }
+
+    li button {
+      background: #e74c3c;
+      padding: 4px 10px;
+      font-size: 14px;
+    }
+
+    li button:hover {
+      background: #c0392b;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>My To-Do List</h1>
+
+    <div class="input-row">
+      <input type="text" id="taskInput" placeholder="Add a task...">
+      <button onclick="addTask()">Add</button>
+    </div>
+
+    <ul id="taskList"></ul>
+  </div>
+
+  <!-- JavaScript is inside the same file -->
+  <script>
+    const input = document.getElementById("taskInput");
+    const list = document.getElementById("taskList");
+
+    function addTask() {
+      const text = input.value.trim();
+      if (text === "") return;
+
+      const li = document.createElement("li");
+      li.innerHTML = "<span>" + text + "</span>";
+
+      // Click a task to mark it done
+      li.addEventListener("click", () => li.classList.toggle("done"));
+
+      // Delete button
+      const del = document.createElement("button");
+      del.textContent = "Delete";
+      del.addEventListener("click", (e) => {
+        e.stopPropagation();
+        li.remove();
+      });
+
+      li.appendChild(del);
+      list.appendChild(li);
+      input.value = "";
+    }
+
+    // Press Enter to add a task
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") addTask();
+    });
+  </script>
+</body>
+</html>
